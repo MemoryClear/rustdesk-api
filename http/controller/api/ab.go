@@ -1,4 +1,4 @@
-package api
+﻿package api
 
 import (
 	"encoding/json"
@@ -347,12 +347,14 @@ func (a *Ab) Personal(c *gin.Context) {
 		guid := a.ComposeGuid(user.GroupId, user.Id, 0)
 		//如果返回了guid，后面的请求会有变化
 		c.JSON(http.StatusOK, gin.H{
-			"guid": guid,
-			"name": user.Username,
+			"guid":  guid,
+			"name":  user.Username,
+			"owner": user.Username,
+			"note": "",
 			"rule": 3,
 		})
 	} else {
-		c.JSON(http.StatusOK, nil)
+		c.JSON(http.StatusNotFound, nil)
 	}
 
 }
@@ -397,6 +399,7 @@ func (a *Ab) SharedProfiles(c *gin.Context) {
 			Guid:  a.ComposeGuid(user.GroupId, user.Id, ab.Id),
 			Name:  ab.Name,
 			Owner: user.Username,
+			Note:  "",
 			Rule:  model.ShareAddressBookRuleRuleFullControl,
 		})
 	}
@@ -441,7 +444,7 @@ func (a *Ab) SharedProfiles(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"total": 0, //len(res),
+		"total": len(res),
 		"data":  res,
 	})
 }
@@ -550,9 +553,8 @@ func (a *Ab) Peers(c *gin.Context) {
 
 	al := service.AllService.AddressBookService.ListByUserIdAndCollectionId(uid, cid, 1, 1000)
 	c.JSON(http.StatusOK, gin.H{
-		"total":            al.Total,
-		"data":             al.AddressBooks,
-		"licensed_devices": 99999,
+		"total": al.Total,
+		"data":  al.AddressBooks,
 	})
 }
 
