@@ -38,13 +38,22 @@ func (a *Ab) Ab(c *gin.Context) {
 	tagColors := map[string]uint{}
 	//将tags中的name转成一个以逗号分割的字符串
 	var tagNames []string
-	for _, tag := range tags.Tags {
-		tagNames = append(tagNames, tag.Name)
-		tagColors[tag.Name] = tag.Color
+	if tags.Tags != nil {
+		tagNames = make([]string, len(tags.Tags))
+		for i, tag := range tags.Tags {
+			tagNames[i] = tag.Name
+			tagColors[tag.Name] = tag.Color
+		}
+	} else {
+		tagNames = []string{}
 	}
 	tgc, _ := json.Marshal(tagColors)
+	peers := al.AddressBooks
+	if peers == nil {
+		peers = []*api.AbPeerPayload{}
+	}
 	res := &api.AbList{
-		Peers:     al.AddressBooks,
+		Peers:     peers,
 		Tags:      tagNames,
 		TagColors: string(tgc),
 	}
@@ -439,10 +448,14 @@ func (a *Ab) SharedProfiles(c *gin.Context) {
 			Guid:  a.ComposeGuid(_u.GroupId, _u.Id, collection.Id),
 			Name:  collection.Name,
 			Owner: _u.Username,
+			Note:  "",
 			Rule:  allAbIds[collection.Id],
 		})
 	}
 
+	if res == nil {
+		res = []*api.SharedProfilesPayload{}
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"total": len(res),
 		"data":  res,
@@ -552,6 +565,9 @@ func (a *Ab) Peers(c *gin.Context) {
 	}
 
 	al := service.AllService.AddressBookService.ListByUserIdAndCollectionId(uid, cid, 1, 1000)
+	if al.AddressBooks == nil {
+		al.AddressBooks = []*api.AbPeerPayload{}
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"total": al.Total,
 		"data":  al.AddressBooks,
