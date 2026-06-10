@@ -50,7 +50,7 @@ func (a *Ab) Ab(c *gin.Context) {
 	tgc, _ := json.Marshal(tagColors)
 	peers := al.AddressBooks
 	if peers == nil {
-		peers = []*api.AbPeerPayload{}
+		peers = []*model.AddressBook{}
 	}
 	res := &api.AbList{
 		Peers:     peers,
@@ -566,7 +566,7 @@ func (a *Ab) Peers(c *gin.Context) {
 
 	al := service.AllService.AddressBookService.ListByUserIdAndCollectionId(uid, cid, 1, 1000)
 	if al.AddressBooks == nil {
-		al.AddressBooks = []*api.AbPeerPayload{}
+		al.AddressBooks = []*model.AddressBook{}
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"total": al.Total,
