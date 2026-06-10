@@ -24,9 +24,9 @@ on:
         required: false
         default: 'false'
       SKIP_GHCR:
-        description: 'Set to true to skip pushing to GHCR (default: false)'
+        description: 'Set to true to skip pushing to GHCR (default: true)'
         required: false
-        default: 'false'
+        default: 'true'
       WEBCLIENT_SOURCE_LOCATION:
         description: 'Web Client API Repository'
         required: true
