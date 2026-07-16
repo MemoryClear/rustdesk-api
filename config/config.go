@@ -15,6 +15,7 @@ const (
 
 type App struct {
 	WebClient        int           `mapstructure:"web-client"`
+	AdminWeb         int           `mapstructure:"admin-web"`
 	Register         bool          `mapstructure:"register"`
 	RegisterStatus   int           `mapstructure:"register-status"`
 	ShowSwagger      int           `mapstructure:"show-swagger"`
