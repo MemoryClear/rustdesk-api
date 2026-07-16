@@ -87,7 +87,7 @@ func (s *AddressBookService) UpdateAddressBook(abs []*model.AddressBook, userId 
 			tx.Create(ab)
 		} else {
 			//更新
-			tx.Model(&model.AddressBook{}).Where("row_id = ?", dbAB.RowId).Omit("online", "same_server").Updates(ab)
+			tx.Model(&model.AddressBook{}).Where("row_id = ?", dbAB.RowId).Updates(ab)
 		}
 	}
 	//2.4 删除
