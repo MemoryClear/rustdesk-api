@@ -164,7 +164,7 @@
 | TZ                                                     | 时区                                                                             | Asia/Shanghai                |
 | RUSTDESK_API_LANG                                      | 语言                                                                             | `en`,`zh-CN`                 |
 | RUSTDESK_API_APP_WEB_CLIENT                            | 是否启用web-client; 1:启用,0:不启用; 默认启用                                               | 1                            |
-| RUSTDESK_API_APP_ADMIN_WEB                            | 是否启用web管理界面(21114端口); 1:启用,0:不启用(访问显示静态"you lost your way"页面); 默认启用       | 1                            |
+| RUSTDESK_API_APP_ADMIN_WEB                            | 是否启用web管理界面(21114端口); 1:启用,0:不启用(访问返回静态403 forbidden页面); 默认启用       | 1                            |
 | RUSTDESK_API_APP_REGISTER                              | 是否开启注册; `true`, `false`  默认`false`                                             | `false`                      |
 | RUSTDESK_API_APP_SHOW_SWAGGER                          | 是否可见swagger文档;`1`显示，`0`不显示，默认`0`不显示                                            | `1`                          |
 | RUSTDESK_API_APP_TOKEN_EXPIRE                          | token有效时长                                                                      | `168h`                       |
